@@ -1,0 +1,9 @@
+*/obj/
+*/bin/
+
+*.suo
+*.cache
+*.user
+*.db
+
+_ReSharper.OpenShelf/
