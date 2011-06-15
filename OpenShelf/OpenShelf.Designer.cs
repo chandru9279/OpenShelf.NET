@@ -34,14 +34,16 @@
             this.StopButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.VideoBox = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.BookText = new System.Windows.Forms.TextBox();
+            this.EmployeeText = new System.Windows.Forms.TextBox();
+            this.Log = new System.Windows.Forms.Button();
+            this.ShowLogs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.VideoBox)).BeginInit();
             this.SuspendLayout();
             // 
             // VideoSourceButton
             // 
-            this.VideoSourceButton.Location = new System.Drawing.Point(33, 289);
+            this.VideoSourceButton.Location = new System.Drawing.Point(31, 335);
             this.VideoSourceButton.Name = "VideoSourceButton";
             this.VideoSourceButton.Size = new System.Drawing.Size(163, 23);
             this.VideoSourceButton.TabIndex = 14;
@@ -51,7 +53,7 @@
             // 
             // VideoFormatButton
             // 
-            this.VideoFormatButton.Location = new System.Drawing.Point(33, 260);
+            this.VideoFormatButton.Location = new System.Drawing.Point(31, 306);
             this.VideoFormatButton.Name = "VideoFormatButton";
             this.VideoFormatButton.Size = new System.Drawing.Size(163, 23);
             this.VideoFormatButton.TabIndex = 13;
@@ -61,7 +63,7 @@
             // 
             // ContinueButton
             // 
-            this.ContinueButton.Location = new System.Drawing.Point(135, 217);
+            this.ContinueButton.Location = new System.Drawing.Point(133, 264);
             this.ContinueButton.Name = "ContinueButton";
             this.ContinueButton.Size = new System.Drawing.Size(61, 23);
             this.ContinueButton.TabIndex = 12;
@@ -71,7 +73,7 @@
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(80, 217);
+            this.StopButton.Location = new System.Drawing.Point(78, 264);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(49, 23);
             this.StopButton.TabIndex = 11;
@@ -81,7 +83,7 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(33, 217);
+            this.StartButton.Location = new System.Drawing.Point(31, 264);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(41, 23);
             this.StartButton.TabIndex = 10;
@@ -94,35 +96,58 @@
             this.VideoBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VideoBox.ErrorImage = null;
             this.VideoBox.InitialImage = null;
-            this.VideoBox.Location = new System.Drawing.Point(33, 30);
+            this.VideoBox.Location = new System.Drawing.Point(31, 26);
             this.VideoBox.Name = "VideoBox";
-            this.VideoBox.Size = new System.Drawing.Size(163, 160);
+            this.VideoBox.Size = new System.Drawing.Size(294, 215);
             this.VideoBox.TabIndex = 9;
             this.VideoBox.TabStop = false;
             // 
-            // textBox1
+            // BookText
             // 
-            this.textBox1.Location = new System.Drawing.Point(214, 28);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(144, 68);
-            this.textBox1.TabIndex = 15;
+            this.BookText.Location = new System.Drawing.Point(346, 26);
+            this.BookText.Multiline = true;
+            this.BookText.Name = "BookText";
+            this.BookText.Size = new System.Drawing.Size(348, 109);
+            this.BookText.TabIndex = 15;
             // 
-            // textBox2
+            // EmployeeText
             // 
-            this.textBox2.Location = new System.Drawing.Point(214, 122);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(144, 68);
-            this.textBox2.TabIndex = 16;
+            this.EmployeeText.Location = new System.Drawing.Point(346, 141);
+            this.EmployeeText.Multiline = true;
+            this.EmployeeText.Name = "EmployeeText";
+            this.EmployeeText.Size = new System.Drawing.Size(348, 109);
+            this.EmployeeText.TabIndex = 16;
+            // 
+            // Log
+            // 
+            this.Log.Enabled = false;
+            this.Log.Location = new System.Drawing.Point(474, 306);
+            this.Log.Name = "Log";
+            this.Log.Size = new System.Drawing.Size(75, 23);
+            this.Log.TabIndex = 17;
+            this.Log.Text = "LOG";
+            this.Log.UseVisualStyleBackColor = true;
+            this.Log.Click += new System.EventHandler(this.Log_Click);
+            // 
+            // ShowLogs
+            // 
+            this.ShowLogs.Location = new System.Drawing.Point(555, 306);
+            this.ShowLogs.Name = "ShowLogs";
+            this.ShowLogs.Size = new System.Drawing.Size(75, 23);
+            this.ShowLogs.TabIndex = 18;
+            this.ShowLogs.Text = "Show Logs";
+            this.ShowLogs.UseVisualStyleBackColor = true;
+            this.ShowLogs.Click += new System.EventHandler(this.ShowLogs_Click);
             // 
             // OpenShelf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(657, 348);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(737, 402);
+            this.Controls.Add(this.ShowLogs);
+            this.Controls.Add(this.Log);
+            this.Controls.Add(this.EmployeeText);
+            this.Controls.Add(this.BookText);
             this.Controls.Add(this.VideoSourceButton);
             this.Controls.Add(this.VideoFormatButton);
             this.Controls.Add(this.ContinueButton);
@@ -146,8 +171,10 @@
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.PictureBox VideoBox;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox BookText;
+        private System.Windows.Forms.TextBox EmployeeText;
+        private System.Windows.Forms.Button Log;
+        private System.Windows.Forms.Button ShowLogs;
     }
 }
 

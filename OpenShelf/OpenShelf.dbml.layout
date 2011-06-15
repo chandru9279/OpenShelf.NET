@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="OpenShelf">
+  <DataContextMoniker Name="/OpenShelfDataContext" />
+  <nestedChildShapes>
+    <classShape Id="50f6643a-3f1b-4e81-a0fe-bfb6d725f5aa" absoluteBounds="1.875, 1.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/OpenShelfDataContext/Borrow" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d9829d9-69d1-439d-9f3a-92f96451f06d" absoluteBounds="1.8899999999999997, 1.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
