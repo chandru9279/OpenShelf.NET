@@ -2,22 +2,21 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using OpenShelf.Models;
 
 namespace OpenShelf
 {
     public partial class OpenShelf : Form
     {
         private readonly BackgroundWorker _Worker;
-        private Book CurrentBook;
-        private Employee CurrentEmployee;
         private JsonSerializer Serializer = new JsonSerializer();
+        private BorrowSession _BorrowSession;
         private QrCam _Cam;
 
 
         public OpenShelf()
         {
             InitializeComponent();
+            _BorrowSession = new BorrowSession();
             _Worker = new BackgroundWorker();
         }
 
@@ -61,39 +60,71 @@ namespace OpenShelf
             string Decoded = QrCodeUtility.Decode(_Cam.WebCamImage);
             if (!string.IsNullOrEmpty(Decoded))
             {
-                if (Decoded.Contains("name"))
-                {
-                    CurrentEmployee = JsonConvert.DeserializeObject<Employee>(Decoded);
-                }
-                else if (Decoded.Contains("title"))
-                {
-                    CurrentBook = JsonConvert.DeserializeObject<Book>(Decoded);
-                }
+                _BorrowSession.Decode(Decoded);
             }
         }
 
         private void WorkCompleted(object Sender, EventArgs E)
         {
-            BookText.Text = CurrentBook == null ? "" : CurrentBook.ToString();
-            EmployeeText.Text = CurrentEmployee == null ? "" : CurrentEmployee.ToString();
-            if (CurrentEmployee != null && CurrentBook != null)
+            if (_BorrowSession.isAtomic())
+            {
                 Log.Enabled = true;
+                _BorrowSession.Save();
+                _BorrowSession = new BorrowSession();
+            }
             _Worker.RunWorkerAsync();
-        }
-
-        private void Log_Click(object sender, EventArgs e)
-        {
-            Log.Enabled = false;
-            var Context = new OpenShelfDataContext();
-            Context.Borrows.InsertOnSubmit(new Borrow{Id = Guid.NewGuid(), Book = CurrentBook.ToString(), Employee = CurrentEmployee.ToString()});
-            Context.SubmitChanges();
-            CurrentEmployee = null;
-            CurrentBook = null;
         }
 
         private void ShowLogs_Click(object sender, EventArgs e)
         {
             new LogsView().Show();
+        }
+
+        private void Log_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public class BorrowSession
+    {
+        public Book _ChosenBook { get; private set; }
+        public ThoughtWorker _ChosenThoughtWorker { get; private set; }
+        private OpenShelfContainer OpenShelfContainer;
+
+        public BorrowSession()
+        {
+            OpenShelfContainer = new OpenShelfContainer();
+        }
+
+        public void Decode(string Decoded)
+        {
+            if (Decoded.Contains("OpenShelf"))
+            {
+                if (Decoded.Contains("empId"))
+                {
+                    _ChosenThoughtWorker = JsonConvert.DeserializeObject<ThoughtWorker>(Decoded);
+                }
+                else if (Decoded.Contains("bookId"))
+                {
+                    _ChosenBook = JsonConvert.DeserializeObject<Book>(Decoded);
+                }
+            }
+        }
+
+        public bool isAtomic()
+        {
+            return (null != _ChosenBook) && (null != _ChosenThoughtWorker);
+        }
+
+        public void Save()
+        {
+            var SelectedBook = OpenShelfContainer.Books.Find(_ChosenBook.id);
+            var SelectedThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(_ChosenBook.id);
+            OpenShelfContainer.BorrowDetails.Add(new BorrowDetails
+                                                     {book = SelectedBook, thoughtworker = SelectedThoughtWorker});
+            OpenShelfContainer.SaveChanges();
+
         }
     }
 }

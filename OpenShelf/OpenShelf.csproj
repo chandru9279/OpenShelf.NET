@@ -49,13 +49,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Refs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Book.cs">
+      <DependentUpon>OpenShelf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BorrowDetails.cs">
+      <DependentUpon>OpenShelf.tt</DependentUpon>
+    </Compile>
     <Compile Include="LogsDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -85,19 +95,26 @@
     <Compile Include="LogsView.Designer.cs">
       <DependentUpon>LogsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\Borrow.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="OpenShelf.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpenShelf.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="OpenShelf.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OpenShelf.Designer.cs">
       <DependentUpon>OpenShelf.cs</DependentUpon>
     </Compile>
-    <Compile Include="OpenShelf1.designer.cs">
+    <Compile Include="OpenShelf1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OpenShelf.dbml</DependentUpon>
+      <DependentUpon>OpenShelf.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpenShelf1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpenShelf.edmx</DependentUpon>
     </Compile>
     <Compile Include="OpenShelfDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -118,6 +135,9 @@
     </Compile>
     <Compile Include="QRCodeUtility.cs" />
     <Compile Include="QrCam.cs" />
+    <Compile Include="ThoughtWorker.cs">
+      <DependentUpon>OpenShelf.tt</DependentUpon>
+    </Compile>
     <None Include="app.config" />
     <None Include="LogsDataSet.xsc">
       <DependentUpon>LogsDataSet.xsd</DependentUpon>
@@ -130,9 +150,6 @@
     <None Include="LogsDataSet.xss">
       <DependentUpon>LogsDataSet.xsd</DependentUpon>
     </None>
-    <None Include="OpenShelf.dbml.layout">
-      <DependentUpon>OpenShelf.dbml</DependentUpon>
-    </None>
     <EmbeddedResource Include="LogsView.resx">
       <DependentUpon>LogsView.cs</DependentUpon>
     </EmbeddedResource>
@@ -143,6 +160,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="OpenShelf.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OpenShelf1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="OpenShelf.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OpenShelf.Context.cs</LastGenOutput>
+    </None>
+    <None Include="OpenShelf.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OpenShelf1.cs</LastGenOutput>
+    </None>
     <None Include="OpenShelfDataSet.xsc">
       <DependentUpon>OpenShelfDataSet.xsd</DependentUpon>
     </None>
@@ -160,26 +189,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database1.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database2.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Refs\Newtonsoft.Json.dll" />
     <Content Include="Refs\WebCam_Capture.dll" />
     <Content Include="Refs\zxing.dll" />
     <Content Include="Refs\zxing.pdb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenShelf.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>OpenShelf1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
