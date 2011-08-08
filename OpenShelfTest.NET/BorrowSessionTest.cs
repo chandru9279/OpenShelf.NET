@@ -70,7 +70,7 @@ namespace OpenShelfTest.NET
         ///A test for Decode
         ///</summary>
         [TestMethod()]
-        public void DecodeTest()
+        public void DecodeThoughtWorker()
         {
             BorrowSession target = new BorrowSession();
             int empId = 12990;
@@ -85,6 +85,23 @@ namespace OpenShelfTest.NET
 //            thoughtWorker.Role = "Developer";
 //            Trace.WriteLine("This is just a test");
 //            Trace.WriteLine(JsonConvert.SerializeObject(thoughtWorker));
+        }
+
+        [TestMethod()]
+        public void DecodeBook()
+        {
+            BorrowSession target = new BorrowSession();
+            int bookId = 3001;
+            string Decoded =
+                "{\"bookId\":3001.0,\"Title\":\"Implementation Patterns\",\"Isbn\":\"2009234098\",\"NumberOfCopies\":1,\"Authors\":\"\",\"borrow_details\":[]}";
+            target.Decode(Decoded);
+            Assert.AreEqual(bookId, target._ChosenBook.bookId);
+//            Book book = new Book();
+//            book.bookId = 3001;
+//            book.Title = "Implementation Patterns";
+//            book.NumberOfCopies = 1;
+//            book.Isbn = "2009234098";
+//            Trace.WriteLine(JsonConvert.SerializeObject(book));
         }
     }
 }

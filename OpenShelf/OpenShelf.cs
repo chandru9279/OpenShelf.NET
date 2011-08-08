@@ -119,8 +119,8 @@ namespace OpenShelf
 
         public void Save()
         {
-            var SelectedBook = OpenShelfContainer.Books.Find(_ChosenBook.id);
-            var SelectedThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(_ChosenBook.id);
+            var SelectedBook = OpenShelfContainer.Books.Find(_ChosenBook.bookId);
+            var SelectedThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(_ChosenBook.bookId);
             OpenShelfContainer.BorrowDetails.Add(new BorrowDetails
                                                      {book = SelectedBook, thoughtworker = SelectedThoughtWorker});
             OpenShelfContainer.SaveChanges();

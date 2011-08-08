@@ -19,7 +19,7 @@ namespace OpenShelf
             this.borrow_details = new HashSet<BorrowDetails>();
         }
     
-        public decimal id { get; set; }
+        public decimal bookId { get; set; }
         public string Title { get; set; }
         public string Isbn { get; set; }
         public long NumberOfCopies { get; set; }

@@ -89,9 +89,9 @@
         </EntityContainer>
         <EntityType Name="Book">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="bookId" />
           </Key>
-          <Property Name="id" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bookId" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" />
           <Property Name="Isbn" Type="String" Nullable="false" />
           <Property Name="NumberOfCopies" Type="Int64" Nullable="false" />
@@ -123,7 +123,7 @@
           <End Role="borrow_details" Type="openshelfModel.BorrowDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="book">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="bookId" />
             </Principal>
             <Dependent Role="borrow_details">
               <PropertyRef Name="Book" />
@@ -149,7 +149,7 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="openshelfModelStoreContainer" CdmEntityContainer="OpenShelfContainer">
           <EntitySetMapping Name="Books"><EntityTypeMapping TypeName="openshelfModel.Book"><MappingFragment StoreEntitySet="book">
-            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="bookId" ColumnName="id" />
             <ScalarProperty Name="Title" ColumnName="book_title" />
             <ScalarProperty Name="Isbn" ColumnName="isbn" />
             <ScalarProperty Name="NumberOfCopies" ColumnName="number_of_copies" />
