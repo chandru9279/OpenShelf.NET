@@ -82,7 +82,6 @@ namespace OpenShelf
 
         private void Log_Click(object sender, EventArgs e)
         {
-
         }
     }
 
@@ -99,16 +98,13 @@ namespace OpenShelf
 
         public void Decode(string Decoded)
         {
-            if (Decoded.Contains("OpenShelf"))
+            if (Decoded.Contains("empId"))
             {
-                if (Decoded.Contains("empId"))
-                {
-                    _ChosenThoughtWorker = JsonConvert.DeserializeObject<ThoughtWorker>(Decoded);
-                }
-                else if (Decoded.Contains("bookId"))
-                {
-                    _ChosenBook = JsonConvert.DeserializeObject<Book>(Decoded);
-                }
+                _ChosenThoughtWorker = JsonConvert.DeserializeObject<ThoughtWorker>(Decoded);
+            }
+            else if (Decoded.Contains("bookId"))
+            {
+                _ChosenBook = JsonConvert.DeserializeObject<Book>(Decoded);
             }
         }
 
@@ -124,7 +120,6 @@ namespace OpenShelf
             OpenShelfContainer.BorrowDetails.Add(new BorrowDetails
                                                      {book = SelectedBook, thoughtworker = SelectedThoughtWorker});
             OpenShelfContainer.SaveChanges();
-
         }
     }
 }

@@ -93,7 +93,7 @@ namespace OpenShelfTest.NET
             BorrowSession target = new BorrowSession();
             int bookId = 3001;
             string Decoded =
-                "{\"bookId\":3001.0,\"Title\":\"Implementation Patterns\",\"Isbn\":\"2009234098\",\"NumberOfCopies\":1,\"Authors\":\"\",\"borrow_details\":[]}";
+                "{\"bookId\":3001.0,\"Title\":\"Implementation Patterns\",\"Isbn\":\"2009234098\",\"NumberOfCopies\":1,\"Authors\":null,\"borrow_details\":[]}";
             target.Decode(Decoded);
             Assert.AreEqual(bookId, target._ChosenBook.bookId);
 //            Book book = new Book();
