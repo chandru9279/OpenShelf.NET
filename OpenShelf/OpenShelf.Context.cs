@@ -26,7 +26,7 @@ namespace OpenShelf
         }
     
         public DbSet<Book> Books { get; set; }
-        public DbSet<BorrowDetails> BorrowDetails { get; set; }
         public DbSet<ThoughtWorker> ThoughtWorkers { get; set; }
+        public DbSet<BookCopy> BookCopies { get; set; }
     }
 }

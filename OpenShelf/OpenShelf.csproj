@@ -81,7 +81,7 @@
     <Compile Include="Book.cs">
       <DependentUpon>OpenShelf.tt</DependentUpon>
     </Compile>
-    <Compile Include="BorrowDetails.cs">
+    <Compile Include="BookCopy.cs">
       <DependentUpon>OpenShelf.tt</DependentUpon>
     </Compile>
     <Compile Include="LogsDataSet.Designer.cs">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -69,7 +70,7 @@ namespace OpenShelf
             if (_BorrowSession.isAtomic())
             {
                 Log.Enabled = true;
-                _BorrowSession.Save();
+                _BorrowSession.SaveSession();
                 _BorrowSession = new BorrowSession();
             }
             _Worker.RunWorkerAsync();
@@ -87,8 +88,9 @@ namespace OpenShelf
 
     public class BorrowSession
     {
-        public Book _ChosenBook { get; private set; }
+        public BookCopy _ChosenBookCopy { get; private set; }
         public ThoughtWorker _ChosenThoughtWorker { get; private set; }
+        public static int DummyThoughtWorker = 101010;
         private OpenShelfContainer OpenShelfContainer;
 
         public BorrowSession()
@@ -102,24 +104,37 @@ namespace OpenShelf
             {
                 _ChosenThoughtWorker = JsonConvert.DeserializeObject<ThoughtWorker>(Decoded);
             }
-            else if (Decoded.Contains("bookId"))
+            else if (Decoded.Contains("CopyId"))
             {
-                _ChosenBook = JsonConvert.DeserializeObject<Book>(Decoded);
+                _ChosenBookCopy = JsonConvert.DeserializeObject<BookCopy>(Decoded);
             }
         }
 
         public bool isAtomic()
         {
-            return (null != _ChosenBook) && (null != _ChosenThoughtWorker);
+            return (null != _ChosenBookCopy) && (null != _ChosenThoughtWorker);
         }
 
-        public void Save()
+        public void SaveSession()
         {
-            var SelectedBook = OpenShelfContainer.Books.Find(_ChosenBook.bookId);
-            var SelectedThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(_ChosenBook.bookId);
-            OpenShelfContainer.BorrowDetails.Add(new BorrowDetails
-                                                     {book = SelectedBook, thoughtworker = SelectedThoughtWorker});
+            BookCopy bookCopy = OpenShelfContainer.BookCopies.Find(_ChosenBookCopy.CopyId);
+            if (bookCopy.AvailabilityStatus.Equals(AvailabilityStatus.AVAILABLE))
+            {
+                bookCopy.AvailabilityStatus = AvailabilityStatus.RESERVED;
+                bookCopy.ThoughtWorkerId = _ChosenThoughtWorker.empId;
+            } else
+            {
+                bookCopy.AvailabilityStatus = AvailabilityStatus.AVAILABLE;
+                bookCopy.ThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(DummyThoughtWorker);
+            }
             OpenShelfContainer.SaveChanges();
+            Trace.WriteLine("Borrow Operation Saved");
         }
+    }
+
+    public class AvailabilityStatus
+    {
+        public static string AVAILABLE = "A";
+        public static string RESERVED = "R";
     }
 }

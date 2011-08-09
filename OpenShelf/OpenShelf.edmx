@@ -4,18 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="openshelfModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="openshelfModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="openshelfModelStoreContainer">
           <EntitySet Name="book" EntityType="openshelfModel.Store.book" store:Type="Tables" Schema="openshelf" />
-          <EntitySet Name="borrow_details" EntityType="openshelfModel.Store.borrow_details" store:Type="Tables" Schema="openshelf" />
+          <EntitySet Name="book_copies" EntityType="openshelfModel.Store.book_copies" store:Type="Tables" Schema="openshelf" />
           <EntitySet Name="thoughtworkers" EntityType="openshelfModel.Store.thoughtworkers" store:Type="Tables" Schema="openshelf" />
-          <AssociationSet Name="borrow_details_ibfk_1" Association="openshelfModel.Store.borrow_details_ibfk_1">
+          <AssociationSet Name="book_copies_ibfk_1" Association="openshelfModel.Store.book_copies_ibfk_1">
             <End Role="thoughtworkers" EntitySet="thoughtworkers" />
-            <End Role="borrow_details" EntitySet="borrow_details" />
+            <End Role="book_copies" EntitySet="book_copies" />
           </AssociationSet>
-          <AssociationSet Name="borrow_details_ibfk_2" Association="openshelfModel.Store.borrow_details_ibfk_2">
+          <AssociationSet Name="book_copies_ibfk_2" Association="openshelfModel.Store.book_copies_ibfk_2">
             <End Role="book" EntitySet="book" />
-            <End Role="borrow_details" EntitySet="borrow_details" />
+            <End Role="book_copies" EntitySet="book_copies" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="book">
@@ -28,14 +28,15 @@
           <Property Name="number_of_copies" Type="uint" Nullable="false" />
           <Property Name="authors" Type="varchar" Nullable="false" MaxLength="150" />
         </EntityType>
-        <EntityType Name="borrow_details">
+        <EntityType Name="book_copies">
           <Key>
-            <PropertyRef Name="transaction_id" />
+            <PropertyRef Name="copy_id" />
           </Key>
-          <Property Name="transaction_id" Type="ubigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="copy_id" Type="ubigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="book_id" Type="ubigint" Nullable="false" />
-          <Property Name="thoughtworker_id" Type="ubigint" Nullable="false" />
-          <Property Name="timestamp" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="thoughtworker_id" Type="ubigint" />
+          <Property Name="borrowed_date" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="availability_status" Type="varchar" Nullable="false" MaxLength="45" />
         </EntityType>
         <EntityType Name="thoughtworkers">
           <Key>
@@ -45,46 +46,45 @@
           <Property Name="emp_name" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="role" Type="varchar" Nullable="false" MaxLength="45" />
         </EntityType>
-        <Association Name="borrow_details_ibfk_1">
-          <End Role="thoughtworkers" Type="openshelfModel.Store.thoughtworkers" Multiplicity="1" />
-          <End Role="borrow_details" Type="openshelfModel.Store.borrow_details" Multiplicity="*" />
+        <Association Name="book_copies_ibfk_1">
+          <End Role="thoughtworkers" Type="openshelfModel.Store.thoughtworkers" Multiplicity="0..1" />
+          <End Role="book_copies" Type="openshelfModel.Store.book_copies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="thoughtworkers">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="borrow_details">
+            <Dependent Role="book_copies">
               <PropertyRef Name="thoughtworker_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="borrow_details_ibfk_2">
+        <Association Name="book_copies_ibfk_2">
           <End Role="book" Type="openshelfModel.Store.book" Multiplicity="1" />
-          <End Role="borrow_details" Type="openshelfModel.Store.borrow_details" Multiplicity="*" />
+          <End Role="book_copies" Type="openshelfModel.Store.book_copies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="book">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="borrow_details">
+            <Dependent Role="book_copies">
               <PropertyRef Name="book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="openshelfModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="OpenShelfContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Books" EntityType="openshelfModel.Book" />
-          <EntitySet Name="BorrowDetails" EntityType="openshelfModel.BorrowDetails" />
           <EntitySet Name="ThoughtWorkers" EntityType="openshelfModel.ThoughtWorker" />
-          <AssociationSet Name="borrow_details_ibfk_2" Association="openshelfModel.borrow_details_ibfk_2">
-            <End Role="book" EntitySet="Books" />
-            <End Role="borrow_details" EntitySet="BorrowDetails" />
+          <EntitySet Name="BookCopies" EntityType="openshelfModel.BookCopy" />
+          <AssociationSet Name="book_copies_ibfk_2" Association="openshelfModel.book_copies_ibfk_2">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="book_copies" EntitySet="BookCopies" />
           </AssociationSet>
-          <AssociationSet Name="borrow_details_ibfk_1" Association="openshelfModel.borrow_details_ibfk_1">
-            <End Role="thoughtworkers" EntitySet="ThoughtWorkers" />
-            <End Role="borrow_details" EntitySet="BorrowDetails" />
+          <AssociationSet Name="book_copies_ibfk_1" Association="openshelfModel.book_copies_ibfk_1">
+            <End Role="ThoughtWorker" EntitySet="ThoughtWorkers" />
+            <End Role="book_copies" EntitySet="BookCopies" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Book">
@@ -96,18 +96,7 @@
           <Property Name="Isbn" Type="String" Nullable="false" />
           <Property Name="NumberOfCopies" Type="Int64" Nullable="false" />
           <Property Name="Authors" Type="String" Nullable="false" />
-          <NavigationProperty Name="borrow_details" Relationship="openshelfModel.borrow_details_ibfk_2" FromRole="book" ToRole="borrow_details" />
-        </EntityType>
-        <EntityType Name="BorrowDetails">
-          <Key>
-            <PropertyRef Name="transaction_id" />
-          </Key>
-          <Property Name="transaction_id" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Book" Type="Decimal" Nullable="false" />
-          <Property Name="ThoughtWorker" Type="Decimal" Nullable="false" />
-          <Property Name="DateOfBorrow" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="book" Relationship="openshelfModel.borrow_details_ibfk_2" FromRole="borrow_details" ToRole="book" />
-          <NavigationProperty Name="thoughtworker" Relationship="openshelfModel.borrow_details_ibfk_1" FromRole="borrow_details" ToRole="thoughtworkers" />
+          <NavigationProperty Name="book_copies" Relationship="openshelfModel.book_copies_ibfk_2" FromRole="Book" ToRole="book_copies" />
         </EntityType>
         <EntityType Name="ThoughtWorker">
           <Key>
@@ -116,29 +105,41 @@
           <Property Name="empId" Type="Decimal" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Role" Type="String" Nullable="false" />
-          <NavigationProperty Name="borrow_details" Relationship="openshelfModel.borrow_details_ibfk_1" FromRole="thoughtworkers" ToRole="borrow_details" />
+          <NavigationProperty Name="book_copies" Relationship="openshelfModel.book_copies_ibfk_1" FromRole="ThoughtWorker" ToRole="book_copies" />
         </EntityType>
-        <Association Name="borrow_details_ibfk_2">
-          <End Role="book" Type="openshelfModel.Book" Multiplicity="1" />
-          <End Role="borrow_details" Type="openshelfModel.BorrowDetails" Multiplicity="*" />
+        <EntityType Name="BookCopy">
+          <Key>
+            <PropertyRef Name="CopyId" />
+          </Key>
+          <Property Type="Decimal" Name="CopyId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="BookId" Nullable="false" />
+          <Property Type="Decimal" Name="ThoughtWorkerId" />
+          <Property Type="DateTime" Name="DateOfBorrow" Nullable="false" />
+          <Property Type="String" Name="AvailabilityStatus" Nullable="false" />
+          <NavigationProperty Name="BookObj" Relationship="openshelfModel.book_copies_ibfk_2" FromRole="book_copies" ToRole="Book" />
+          <NavigationProperty Name="ThoughtWorker" Relationship="openshelfModel.book_copies_ibfk_1" FromRole="book_copies" ToRole="ThoughtWorker" />
+        </EntityType>
+        <Association Name="book_copies_ibfk_2">
+          <End Type="openshelfModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="openshelfModel.BookCopy" Role="book_copies" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="book">
+            <Principal Role="Book">
               <PropertyRef Name="bookId" />
             </Principal>
-            <Dependent Role="borrow_details">
-              <PropertyRef Name="Book" />
+            <Dependent Role="book_copies">
+              <PropertyRef Name="BookId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="borrow_details_ibfk_1">
-          <End Role="thoughtworkers" Type="openshelfModel.ThoughtWorker" Multiplicity="1" />
-          <End Role="borrow_details" Type="openshelfModel.BorrowDetails" Multiplicity="*" />
+        <Association Name="book_copies_ibfk_1">
+          <End Type="openshelfModel.ThoughtWorker" Role="ThoughtWorker" Multiplicity="0..1" />
+          <End Type="openshelfModel.BookCopy" Role="book_copies" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="thoughtworkers">
+            <Principal Role="ThoughtWorker">
               <PropertyRef Name="empId" />
             </Principal>
-            <Dependent Role="borrow_details">
-              <PropertyRef Name="ThoughtWorker" />
+            <Dependent Role="book_copies">
+              <PropertyRef Name="ThoughtWorkerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,17 +156,22 @@
             <ScalarProperty Name="NumberOfCopies" ColumnName="number_of_copies" />
             <ScalarProperty Name="Authors" ColumnName="authors" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="BorrowDetails"><EntityTypeMapping TypeName="openshelfModel.BorrowDetails"><MappingFragment StoreEntitySet="borrow_details">
-            <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
-            <ScalarProperty Name="Book" ColumnName="book_id" />
-            <ScalarProperty Name="ThoughtWorker" ColumnName="thoughtworker_id" />
-            <ScalarProperty Name="DateOfBorrow" ColumnName="timestamp" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="ThoughtWorkers"><EntityTypeMapping TypeName="openshelfModel.ThoughtWorker"><MappingFragment StoreEntitySet="thoughtworkers">
             <ScalarProperty Name="empId" ColumnName="id" />
             <ScalarProperty Name="Name" ColumnName="emp_name" />
             <ScalarProperty Name="Role" ColumnName="role" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BookCopies">
+            <EntityTypeMapping TypeName="openshelfModel.BookCopy">
+              <MappingFragment StoreEntitySet="book_copies">
+                <ScalarProperty Name="AvailabilityStatus" ColumnName="availability_status" />
+                <ScalarProperty Name="DateOfBorrow" ColumnName="borrowed_date" />
+                <ScalarProperty Name="ThoughtWorkerId" ColumnName="thoughtworker_id" />
+                <ScalarProperty Name="BookId" ColumnName="book_id" />
+                <ScalarProperty Name="CopyId" ColumnName="copy_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -189,17 +195,17 @@
     <Diagrams>
       <Diagram Name="OpenShelf">
         <EntityTypeShape EntityType="openshelfModel.Book" Width="1.5" PointX="0.75" PointY="1" Height="2.1725878906250005" IsExpanded="true" />
-        <EntityTypeShape EntityType="openshelfModel.BorrowDetails" Width="1.5" PointX="4.375" PointY="3.375" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="openshelfModel.ThoughtWorker" Width="1.5" PointX="7.25" PointY="1.125" Height="1.7879850260416674" IsExpanded="true" />
-        <AssociationConnector Association="openshelfModel.borrow_details_ibfk_2" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="1.7185697428385418" />
-          <ConnectorPoint PointX="4.92187375" PointY="1.7185697428385418" />
-          <ConnectorPoint PointX="4.92187375" PointY="3.375" />
+        <EntityTypeShape EntityType="openshelfModel.ThoughtWorker" Width="1.5" PointX="7.25" PointY="1.125" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="openshelfModel.BookCopy" Width="1.5" PointX="4.5" PointY="3.25" Height="2.3648893229166656" />
+        <AssociationConnector Association="openshelfModel.book_copies_ibfk_2" >
+          <ConnectorPoint PointX="2.25" PointY="2.0862939453125" />
+          <ConnectorPoint PointX="5.25" PointY="2.0862939453125" />
+          <ConnectorPoint PointX="5.25" PointY="3.25" />
         </AssociationConnector>
-        <AssociationConnector Association="openshelfModel.borrow_details_ibfk_1" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.25" PointY="2.4371394856770836" />
-          <ConnectorPoint PointX="5.5312525" PointY="2.4371394856770836" />
-          <ConnectorPoint PointX="5.5312525" PointY="3.375" />
+        <AssociationConnector Association="openshelfModel.book_copies_ibfk_1" >
+          <ConnectorPoint PointX="7.25" PointY="1.60564697265625" />
+          <ConnectorPoint PointX="5.6562525" PointY="1.60564697265625" />
+          <ConnectorPoint PointX="5.6562525" PointY="3.25" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

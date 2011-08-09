@@ -16,7 +16,7 @@ namespace OpenShelf
     {
         public Book()
         {
-            this.borrow_details = new HashSet<BorrowDetails>();
+            this.book_copies = new HashSet<BookCopy>();
         }
     
         public decimal bookId { get; set; }
@@ -25,6 +25,6 @@ namespace OpenShelf
         public long NumberOfCopies { get; set; }
         public string Authors { get; set; }
     
-        public virtual ICollection<BorrowDetails> borrow_details { get; set; }
+        public virtual ICollection<BookCopy> book_copies { get; set; }
     }
 }

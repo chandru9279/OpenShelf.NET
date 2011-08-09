@@ -16,13 +16,13 @@ namespace OpenShelf
     {
         public ThoughtWorker()
         {
-            this.borrow_details = new HashSet<BorrowDetails>();
+            this.book_copies = new HashSet<BookCopy>();
         }
     
         public decimal empId { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
     
-        public virtual ICollection<BorrowDetails> borrow_details { get; set; }
+        public virtual ICollection<BookCopy> book_copies { get; set; }
     }
 }

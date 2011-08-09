@@ -7,17 +7,9 @@ using System;
 
 namespace OpenShelfTest.NET
 {
-    
-    
-    /// <summary>
-    ///This is a test class for BorrowSessionTest and is intended
-    ///to contain all BorrowSessionTest Unit Tests
-    ///</summary>
     [TestClass()]
     public class BorrowSessionTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -88,20 +80,39 @@ namespace OpenShelfTest.NET
         }
 
         [TestMethod()]
-        public void DecodeBook()
+        public void DecodeBookCopy()
         {
             BorrowSession target = new BorrowSession();
-            int bookId = 3001;
-            string Decoded =
-                "{\"bookId\":3001.0,\"Title\":\"Implementation Patterns\",\"Isbn\":\"2009234098\",\"NumberOfCopies\":1,\"Authors\":null,\"borrow_details\":[]}";
+            string Decoded = "{\"CopyId\":1001.0,\"BookId\":3001.0,\"ThoughtWorkerId\":null,\"DateOfBorrow\":\"\\/Date(1312866974950-0700)\\/\",\"AvailabilityStatus\":null,\"BookObj\":null,\"ThoughtWorker\":null}";
             target.Decode(Decoded);
-            Assert.AreEqual(bookId, target._ChosenBook.bookId);
-//            Book book = new Book();
-//            book.bookId = 3001;
-//            book.Title = "Implementation Patterns";
-//            book.NumberOfCopies = 1;
-//            book.Isbn = "2009234098";
-//            Trace.WriteLine(JsonConvert.SerializeObject(book));
+            Assert.AreEqual(3001, target._ChosenBookCopy.BookId);
+            Assert.AreEqual(1001, target._ChosenBookCopy.CopyId);
+        }
+
+        [TestMethod()]
+        public void ShouldChangeTheAvailabilityStatusToReserved()
+        {
+            BorrowSession target = new BorrowSession();
+            target.Decode("{\"CopyId\":1001.0,\"BookId\":3001.0,\"ThoughtWorkerId\":null,\"DateOfBorrow\":\"\\/Date(1312866974950-0700)\\/\",\"AvailabilityStatus\":null,\"BookObj\":null,\"ThoughtWorker\":null}");
+            target.Decode("{\"empId\":12990.0,\"Name\":\"Arvind\",\"Role\":\"Developer\",\"borrow_details\":[]}");
+            target.SaveSession();
+            var bookCopyId = target._ChosenBookCopy.CopyId;
+            BookCopy bookCopy = new OpenShelfContainer().BookCopies.Find(bookCopyId);
+            Assert.AreEqual(AvailabilityStatus.RESERVED, bookCopy.AvailabilityStatus);
+            Assert.AreEqual(12990, bookCopy.ThoughtWorker.empId);
+        }
+
+        [TestMethod()]
+        public void ShouldReturnTheReservedBook()
+        {
+            BorrowSession target = new BorrowSession();
+            target.Decode("{\"CopyId\":1001.0,\"BookId\":3001.0,\"ThoughtWorkerId\":null,\"DateOfBorrow\":\"\\/Date(1312866974950-0700)\\/\",\"AvailabilityStatus\":null,\"BookObj\":null,\"ThoughtWorker\":null}");
+            target.Decode("{\"empId\":12990.0,\"Name\":\"Arvind\",\"Role\":\"Developer\",\"borrow_details\":[]}");
+            target.SaveSession();
+            var bookCopyId = target._ChosenBookCopy.CopyId;
+            BookCopy bookCopy = new OpenShelfContainer().BookCopies.Find(bookCopyId);
+            Assert.AreEqual(AvailabilityStatus.AVAILABLE, bookCopy.AvailabilityStatus);
+            Assert.AreEqual(101010, bookCopy.ThoughtWorker.empId);
         }
     }
 }
