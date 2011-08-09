@@ -7,4 +7,5 @@
 *.db
 
 **/*.trx
+TestResults/
 _ReSharper.OpenShelf/

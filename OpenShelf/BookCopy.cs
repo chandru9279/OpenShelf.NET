@@ -12,14 +12,15 @@ namespace OpenShelf
     using System;
     using System.Collections.Generic;
     
-    public partial class BorrowDetails
+    public partial class BookCopy
     {
-        public decimal transaction_id { get; set; }
-        public decimal Book { get; set; }
-        public decimal ThoughtWorker { get; set; }
+        public decimal CopyId { get; set; }
+        public decimal BookId { get; set; }
+        public Nullable<decimal> ThoughtWorkerId { get; set; }
         public System.DateTime DateOfBorrow { get; set; }
+        public string AvailabilityStatus { get; set; }
     
-        public virtual Book book { get; set; }
-        public virtual ThoughtWorker thoughtworker { get; set; }
+        public virtual Book BookObj { get; set; }
+        public virtual ThoughtWorker ThoughtWorker { get; set; }
     }
 }
