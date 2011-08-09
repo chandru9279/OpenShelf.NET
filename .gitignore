@@ -6,5 +6,5 @@
 *.user
 *.db
 
-*.trx
+**/*.trx
 _ReSharper.OpenShelf/
