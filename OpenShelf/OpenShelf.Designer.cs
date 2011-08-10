@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OpenShelf));
             this.VideoSourceButton = new System.Windows.Forms.Button();
             this.VideoFormatButton = new System.Windows.Forms.Button();
             this.ContinueButton = new System.Windows.Forms.Button();
@@ -35,9 +37,12 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.VideoBox = new System.Windows.Forms.PictureBox();
             this.BookText = new System.Windows.Forms.TextBox();
-            this.EmployeeText = new System.Windows.Forms.TextBox();
+            this.ThoughtWorkerText = new System.Windows.Forms.TextBox();
             this.Log = new System.Windows.Forms.Button();
             this.ShowLogs = new System.Windows.Forms.Button();
+            this.StatusText = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ResetTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.VideoBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,6 +54,7 @@
             this.VideoSourceButton.TabIndex = 14;
             this.VideoSourceButton.Text = "Video Source";
             this.VideoSourceButton.UseVisualStyleBackColor = true;
+            this.VideoSourceButton.Visible = false;
             this.VideoSourceButton.Click += new System.EventHandler(this.VideoSourceButton_Click);
             // 
             // VideoFormatButton
@@ -59,23 +65,25 @@
             this.VideoFormatButton.TabIndex = 13;
             this.VideoFormatButton.Text = "Video Format";
             this.VideoFormatButton.UseVisualStyleBackColor = true;
+            this.VideoFormatButton.Visible = false;
             this.VideoFormatButton.Click += new System.EventHandler(this.VideoFormatButton_Click);
             // 
             // ContinueButton
             // 
-            this.ContinueButton.Location = new System.Drawing.Point(133, 264);
+            this.ContinueButton.Location = new System.Drawing.Point(264, 261);
             this.ContinueButton.Name = "ContinueButton";
             this.ContinueButton.Size = new System.Drawing.Size(61, 23);
             this.ContinueButton.TabIndex = 12;
             this.ContinueButton.Text = "Continue";
             this.ContinueButton.UseVisualStyleBackColor = true;
+            this.ContinueButton.Visible = false;
             this.ContinueButton.Click += new System.EventHandler(this.ContinueButton_Click);
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(78, 264);
+            this.StopButton.Location = new System.Drawing.Point(159, 264);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(49, 23);
+            this.StopButton.Size = new System.Drawing.Size(67, 23);
             this.StopButton.TabIndex = 11;
             this.StopButton.Text = "Stop";
             this.StopButton.UseVisualStyleBackColor = true;
@@ -83,9 +91,9 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(31, 264);
+            this.StartButton.Location = new System.Drawing.Point(79, 264);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(41, 23);
+            this.StartButton.Size = new System.Drawing.Size(60, 23);
             this.StartButton.TabIndex = 10;
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -104,19 +112,29 @@
             // 
             // BookText
             // 
+            this.BookText.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.BookText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BookText.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.BookText.Location = new System.Drawing.Point(346, 26);
             this.BookText.Multiline = true;
             this.BookText.Name = "BookText";
-            this.BookText.Size = new System.Drawing.Size(348, 109);
+            this.BookText.ReadOnly = true;
+            this.BookText.Size = new System.Drawing.Size(348, 95);
             this.BookText.TabIndex = 15;
+            this.BookText.Text = "Chosen Book";
             // 
-            // EmployeeText
+            // ThoughtWorkerText
             // 
-            this.EmployeeText.Location = new System.Drawing.Point(346, 141);
-            this.EmployeeText.Multiline = true;
-            this.EmployeeText.Name = "EmployeeText";
-            this.EmployeeText.Size = new System.Drawing.Size(348, 109);
-            this.EmployeeText.TabIndex = 16;
+            this.ThoughtWorkerText.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.ThoughtWorkerText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThoughtWorkerText.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.ThoughtWorkerText.Location = new System.Drawing.Point(346, 141);
+            this.ThoughtWorkerText.Multiline = true;
+            this.ThoughtWorkerText.Name = "ThoughtWorkerText";
+            this.ThoughtWorkerText.ReadOnly = true;
+            this.ThoughtWorkerText.Size = new System.Drawing.Size(348, 100);
+            this.ThoughtWorkerText.TabIndex = 16;
+            this.ThoughtWorkerText.Text = "Chosen User";
             // 
             // Log
             // 
@@ -127,6 +145,7 @@
             this.Log.TabIndex = 17;
             this.Log.Text = "LOG";
             this.Log.UseVisualStyleBackColor = true;
+            this.Log.Visible = false;
             this.Log.Click += new System.EventHandler(this.Log_Click);
             // 
             // ShowLogs
@@ -137,16 +156,43 @@
             this.ShowLogs.TabIndex = 18;
             this.ShowLogs.Text = "Show Logs";
             this.ShowLogs.UseVisualStyleBackColor = true;
+            this.ShowLogs.Visible = false;
             this.ShowLogs.Click += new System.EventHandler(this.ShowLogs_Click);
+            // 
+            // StatusText
+            // 
+            this.StatusText.BackColor = System.Drawing.SystemColors.Control;
+            this.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.StatusText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusText.Location = new System.Drawing.Point(346, 247);
+            this.StatusText.Multiline = true;
+            this.StatusText.Name = "StatusText";
+            this.StatusText.ReadOnly = true;
+            this.StatusText.Size = new System.Drawing.Size(345, 37);
+            this.StatusText.TabIndex = 19;
+            this.StatusText.Text = "Status: ";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(566, 46);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // ResetTimer
+            // 
+            this.ResetTimer.Interval = 3000;
+            this.ResetTimer.Tick += new System.EventHandler(this.ResetTimer_Tick);
             // 
             // OpenShelf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(737, 402);
+            this.ClientSize = new System.Drawing.Size(714, 296);
+            this.Controls.Add(this.StatusText);
             this.Controls.Add(this.ShowLogs);
             this.Controls.Add(this.Log);
-            this.Controls.Add(this.EmployeeText);
+            this.Controls.Add(this.ThoughtWorkerText);
             this.Controls.Add(this.BookText);
             this.Controls.Add(this.VideoSourceButton);
             this.Controls.Add(this.VideoFormatButton);
@@ -154,6 +200,9 @@
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.VideoBox);
+            this.Controls.Add(this.textBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "OpenShelf";
             this.Text = "OpenShelf";
             this.Load += new System.EventHandler(this.OpenShelf_Load);
@@ -171,10 +220,13 @@
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.PictureBox VideoBox;
-        private System.Windows.Forms.TextBox BookText;
-        private System.Windows.Forms.TextBox EmployeeText;
         private System.Windows.Forms.Button Log;
         private System.Windows.Forms.Button ShowLogs;
+        private System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.TextBox BookText;
+        public System.Windows.Forms.TextBox ThoughtWorkerText;
+        public System.Windows.Forms.TextBox StatusText;
+        private System.Windows.Forms.Timer ResetTimer;
     }
 }
 
