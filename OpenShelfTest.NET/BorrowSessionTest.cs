@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using System.IO;
-using Newtonsoft.Json;
-using OpenShelf;
+﻿using OpenShelf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace OpenShelfTest.NET
 {
@@ -11,6 +7,7 @@ namespace OpenShelfTest.NET
     public class BorrowSessionTest
     {
         private TestContext testContextInstance;
+        
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -78,6 +75,7 @@ namespace OpenShelfTest.NET
 //            Trace.WriteLine("This is just a test");
 //            Trace.WriteLine(JsonConvert.SerializeObject(thoughtWorker));
         }
+
 
         [TestMethod()]
         public void DecodeBookCopy()

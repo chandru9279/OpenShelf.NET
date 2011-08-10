@@ -16,15 +16,6 @@ namespace OpenShelf
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-//            var openShelfContainer = new OpenShelfContainer();
-//            int DummyUser = 101010;
-//            ThoughtWorker dummyThoughtWorker = openShelfContainer.ThoughtWorkers.Find(DummyUser);
-//            IQueryable<Book> books = openShelfContainer.Books.Where(b => (b.NumberOfCopies == 3));
-//            foreach (Book selectedBook in books)
-//            {
-//                openShelfContainer.BookCopies.Add(new BorrowDetails{BookObj = selectedBook, DateOfBorrow = DateTime.Now, CopyOwner = dummyThoughtWorker});
-//            }
-//            openShelfContainer.SaveChanges();
             Application.Run(new OpenShelf());
         }
     }
