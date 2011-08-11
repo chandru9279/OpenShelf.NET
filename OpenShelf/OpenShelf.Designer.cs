@@ -43,12 +43,13 @@
             this.StatusText = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.ResetTimer = new System.Windows.Forms.Timer(this.components);
+            this.TransactionTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.VideoBox)).BeginInit();
             this.SuspendLayout();
             // 
             // VideoSourceButton
             // 
-            this.VideoSourceButton.Location = new System.Drawing.Point(31, 335);
+            this.VideoSourceButton.Location = new System.Drawing.Point(36, 473);
             this.VideoSourceButton.Name = "VideoSourceButton";
             this.VideoSourceButton.Size = new System.Drawing.Size(163, 23);
             this.VideoSourceButton.TabIndex = 14;
@@ -59,7 +60,7 @@
             // 
             // VideoFormatButton
             // 
-            this.VideoFormatButton.Location = new System.Drawing.Point(31, 306);
+            this.VideoFormatButton.Location = new System.Drawing.Point(36, 444);
             this.VideoFormatButton.Name = "VideoFormatButton";
             this.VideoFormatButton.Size = new System.Drawing.Size(163, 23);
             this.VideoFormatButton.TabIndex = 13;
@@ -70,7 +71,7 @@
             // 
             // ContinueButton
             // 
-            this.ContinueButton.Location = new System.Drawing.Point(264, 261);
+            this.ContinueButton.Location = new System.Drawing.Point(237, 411);
             this.ContinueButton.Name = "ContinueButton";
             this.ContinueButton.Size = new System.Drawing.Size(61, 23);
             this.ContinueButton.TabIndex = 12;
@@ -81,7 +82,7 @@
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(159, 264);
+            this.StopButton.Location = new System.Drawing.Point(164, 402);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(67, 23);
             this.StopButton.TabIndex = 11;
@@ -91,7 +92,7 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(79, 264);
+            this.StartButton.Location = new System.Drawing.Point(84, 402);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(60, 23);
             this.StartButton.TabIndex = 10;
@@ -104,9 +105,9 @@
             this.VideoBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VideoBox.ErrorImage = null;
             this.VideoBox.InitialImage = null;
-            this.VideoBox.Location = new System.Drawing.Point(31, 26);
+            this.VideoBox.Location = new System.Drawing.Point(60, 91);
             this.VideoBox.Name = "VideoBox";
-            this.VideoBox.Size = new System.Drawing.Size(294, 215);
+            this.VideoBox.Size = new System.Drawing.Size(363, 246);
             this.VideoBox.TabIndex = 9;
             this.VideoBox.TabStop = false;
             // 
@@ -115,7 +116,7 @@
             this.BookText.BackColor = System.Drawing.SystemColors.HotTrack;
             this.BookText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BookText.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.BookText.Location = new System.Drawing.Point(346, 26);
+            this.BookText.Location = new System.Drawing.Point(488, 103);
             this.BookText.Multiline = true;
             this.BookText.Name = "BookText";
             this.BookText.ReadOnly = true;
@@ -128,7 +129,7 @@
             this.ThoughtWorkerText.BackColor = System.Drawing.SystemColors.HotTrack;
             this.ThoughtWorkerText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ThoughtWorkerText.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.ThoughtWorkerText.Location = new System.Drawing.Point(346, 141);
+            this.ThoughtWorkerText.Location = new System.Drawing.Point(488, 218);
             this.ThoughtWorkerText.Multiline = true;
             this.ThoughtWorkerText.Name = "ThoughtWorkerText";
             this.ThoughtWorkerText.ReadOnly = true;
@@ -139,7 +140,7 @@
             // Log
             // 
             this.Log.Enabled = false;
-            this.Log.Location = new System.Drawing.Point(474, 306);
+            this.Log.Location = new System.Drawing.Point(616, 383);
             this.Log.Name = "Log";
             this.Log.Size = new System.Drawing.Size(75, 23);
             this.Log.TabIndex = 17;
@@ -150,7 +151,7 @@
             // 
             // ShowLogs
             // 
-            this.ShowLogs.Location = new System.Drawing.Point(555, 306);
+            this.ShowLogs.Location = new System.Drawing.Point(697, 383);
             this.ShowLogs.Name = "ShowLogs";
             this.ShowLogs.Size = new System.Drawing.Size(75, 23);
             this.ShowLogs.TabIndex = 18;
@@ -164,7 +165,7 @@
             this.StatusText.BackColor = System.Drawing.SystemColors.Control;
             this.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.StatusText.Font = new System.Drawing.Font("Garamond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StatusText.Location = new System.Drawing.Point(346, 247);
+            this.StatusText.Location = new System.Drawing.Point(488, 324);
             this.StatusText.Multiline = true;
             this.StatusText.Name = "StatusText";
             this.StatusText.ReadOnly = true;
@@ -174,7 +175,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(566, 46);
+            this.textBox1.Location = new System.Drawing.Point(708, 123);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 1;
@@ -184,11 +185,15 @@
             this.ResetTimer.Interval = 3000;
             this.ResetTimer.Tick += new System.EventHandler(this.ResetTimer_Tick);
             // 
+            // TransactionTimer
+            // 
+            this.TransactionTimer.Interval = 1000;
+            // 
             // OpenShelf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 296);
+            this.ClientSize = new System.Drawing.Size(878, 459);
             this.Controls.Add(this.StatusText);
             this.Controls.Add(this.ShowLogs);
             this.Controls.Add(this.Log);
@@ -227,6 +232,7 @@
         public System.Windows.Forms.TextBox ThoughtWorkerText;
         public System.Windows.Forms.TextBox StatusText;
         private System.Windows.Forms.Timer ResetTimer;
+        private System.Windows.Forms.Timer TransactionTimer;
     }
 }
 

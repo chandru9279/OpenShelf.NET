@@ -1,4 +1,5 @@
-﻿using OpenShelf;
+﻿using Newtonsoft.Json;
+using OpenShelf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace OpenShelfTest.NET
@@ -54,6 +55,14 @@ namespace OpenShelfTest.NET
         //}
         //
         #endregion
+
+        [TestMethod()]
+        public void ShouldDecodeJsonToBookDTO()
+        {
+            string copyidBookid = "{\"CopyId\": 1001, \"BookId\" : 0}";
+            var deserializeObject = JsonConvert.DeserializeObject<BookDTO>(copyidBookid);
+            Assert.AreEqual(1001, deserializeObject.CopyId);
+        }
 
         /// <summary>
         ///A test for Decode

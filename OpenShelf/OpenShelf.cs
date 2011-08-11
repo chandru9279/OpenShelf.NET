@@ -152,8 +152,7 @@ namespace OpenShelf
             }
             else if (Decoded.Contains("CopyId"))
             {
-                _ChosenBookCopy = JsonConvert.DeserializeObject<BookCopy>(Decoded);
-                _ChosenBookCopy = OpenShelfContainer.BookCopies.Find(_ChosenBookCopy.CopyId);
+                _ChosenBookCopy = OpenShelfContainer.BookCopies.Find(JsonConvert.DeserializeObject<BookDTO>(Decoded).CopyId);
                 PlayBeep();
             }
         }
@@ -186,6 +185,12 @@ namespace OpenShelf
             OpenShelfContainer.SaveChanges();
             Trace.WriteLine("Borrow Operation Saved");
         }
+    }
+
+    public class BookDTO
+    {
+        public decimal CopyId { get; set; }
+        public decimal BookId { get; set; }
     }
 
     public class AvailabilityStatus
