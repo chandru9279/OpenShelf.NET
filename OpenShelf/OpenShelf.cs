@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -90,6 +91,8 @@ namespace OpenShelf
                 SaveStatus();
                 UpdateFormValues();
                 _BorrowSession = new BorrowSession();
+                _BorrowSession._ChosenThoughtWorker = null;
+                _BorrowSession._ChosenBookCopy = null;
                 ResetFormValuesAfterSomeInterval();
             }
             _Worker.RunWorkerAsync();
@@ -127,13 +130,14 @@ namespace OpenShelf
             BookText.Text = DefaultBookStatus;
             ThoughtWorkerText.Text = DefaultUserStatus;
             StatusText.Text = DefaultStatusText;
+            ResetTimer.Enabled = false;
         }
     }
 
     public class BorrowSession
     {
-        public BookCopy _ChosenBookCopy { get; private set; }
-        public ThoughtWorker _ChosenThoughtWorker { get; private set; }
+        public BookCopy _ChosenBookCopy { get; internal set; }
+        public ThoughtWorker _ChosenThoughtWorker { get; internal set; }
         public static int DummyThoughtWorker = 101010;
         private OpenShelfContainer OpenShelfContainer;
 
@@ -149,12 +153,19 @@ namespace OpenShelf
                 _ChosenThoughtWorker = JsonConvert.DeserializeObject<ThoughtWorker>(Decoded);
                 _ChosenThoughtWorker = OpenShelfContainer.ThoughtWorkers.Find(_ChosenThoughtWorker.empId);
                 PlayBeep();
+                WaitBeforeNextFrame();
             }
             else if (Decoded.Contains("CopyId"))
             {
                 _ChosenBookCopy = OpenShelfContainer.BookCopies.Find(JsonConvert.DeserializeObject<BookDTO>(Decoded).CopyId);
                 PlayBeep();
+                WaitBeforeNextFrame();
             }
+        }
+
+        private static void WaitBeforeNextFrame()
+        {
+            Thread.Sleep(1300);
         }
 
         public void PlayBeep()
